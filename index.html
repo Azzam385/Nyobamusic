@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Nyoba Mucic</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#050816;
+color:white;
+height:100vh;
+overflow:hidden;
+}
+
+/* BACKGROUND */
+
+body::before{
+content:'';
+position:fixed;
+width:500px;
+height:500px;
+background:#002fff33;
+filter:blur(120px);
+top:-200px;
+right:-100px;
+z-index:-1;
+animation:moveGlow 8s infinite alternate;
+}
+
+body::after{
+content:'';
+position:fixed;
+width:400px;
+height:400px;
+background:#00aeff22;
+filter:blur(120px);
+bottom:-150px;
+left:-100px;
+z-index:-1;
+animation:moveGlow2 8s infinite alternate;
+}
+
+@keyframes moveGlow{
+0%{
+transform:translateY(0px);
+}
+100%{
+transform:translateY(50px);
+}
+}
+
+@keyframes moveGlow2{
+0%{
+transform:translateX(0px);
+}
+100%{
+transform:translateX(50px);
+}
+}
+
+/* CONTAINER */
+
+.container{
+display:flex;
+flex-direction:column;
+height:100vh;
+backdrop-filter:blur(20px);
+}
+
+/* NAVBAR */
+
+.navbar{
+padding:20px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+border-bottom:1px solid #1b2440;
+background:#0b1020cc;
+backdrop-filter:blur(20px);
+}
+
+.logo{
+font-size:30px;
+font-weight:600;
+background:linear-gradient(to right,#00c6ff,#0072ff);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.search-box{
+display:flex;
+gap:10px;
+width:60%;
+}
+
+.search-box input{
+flex:1;
+padding:15px 20px;
+border:none;
+border-radius:20px;
+background:#11182d;
+color:white;
+font-size:15px;
+outline:none;
+border:1px solid #1e2a4a;
+}
+
+.search-box button{
+padding:15px 25px;
+border:none;
+border-radius:20px;
+background:linear-gradient(to right,#005eff,#00aeff);
+color:white;
+font-weight:500;
+cursor:pointer;
+transition:0.3s;
+box-shadow:0 0 15px #005eff55;
+}
+
+.search-box button:hover{
+transform:scale(1.05);
+}
+
+/* CONTENT */
+
+.content{
+flex:1;
+display:flex;
+overflow:hidden;
+}
+
+/* SONG LIST */
+
+.song-list{
+width:35%;
+padding:20px;
+overflow-y:auto;
+border-right:1px solid #1b2440;
+}
+
+.song-list::-webkit-scrollbar{
+width:5px;
+}
+
+.song-list::-webkit-scrollbar-thumb{
+background:#005eff;
+border-radius:20px;
+}
+
+.song-card{
+background:#10182d;
+padding:18px;
+border-radius:20px;
+margin-bottom:15px;
+cursor:pointer;
+transition:0.3s;
+border:1px solid transparent;
+}
+
+.song-card:hover{
+transform:translateY(-3px);
+border:1px solid #006eff;
+box-shadow:0 0 20px #006eff33;
+}
+
+.song-title{
+font-size:17px;
+font-weight:600;
+margin-bottom:6px;
+}
+
+.song-artist{
+font-size:14px;
+color:#9ca8c7;
+}
+
+/* PLAYER */
+
+.player-area{
+flex:1;
+padding:30px;
+overflow-y:auto;
+display:flex;
+flex-direction:column;
+align-items:center;
+}
+
+/* ALBUM */
+
+.album-wrapper{
+position:relative;
+margin-bottom:25px;
+}
+
+.album{
+width:280px;
+height:280px;
+border-radius:50%;
+overflow:hidden;
+border:5px solid #1c2948;
+animation:spin 10s linear infinite;
+animation-play-state:paused;
+box-shadow:
+0 0 40px #005eff55,
+0 0 80px #00aeff22;
+}
+
+.album.playing{
+animation-play-state:running;
+}
+
+.album img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+@keyframes spin{
+from{
+transform:rotate(0deg);
+}
+to{
+transform:rotate(360deg);
+}
+}
+
+/* MUSIC INFO */
+
+.now-playing{
+text-align:center;
+margin-bottom:25px;
+}
+
+.now-playing h2{
+font-size:28px;
+margin-bottom:10px;
+}
+
+.now-playing p{
+color:#9ca8c7;
+}
+
+/* AUDIO */
+
+audio{
+width:100%;
+max-width:500px;
+margin-bottom:30px;
+filter:drop-shadow(0 0 10px #005eff55);
+}
+
+/* LYRICS */
+
+.lyrics{
+width:100%;
+max-width:700px;
+background:#10182d;
+padding:25px;
+border-radius:25px;
+line-height:2;
+white-space:pre-line;
+border:1px solid #1e2a4a;
+box-shadow:0 0 20px #00000055;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+.content{
+flex-direction:column;
+}
+
+.song-list{
+width:100%;
+height:250px;
+border-right:none;
+border-bottom:1px solid #1b2440;
+}
+
+.navbar{
+flex-direction:column;
+align-items:flex-start;
+gap:15px;
+}
+
+.search-box{
+width:100%;
+}
+
+.album{
+width:220px;
+height:220px;
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<!-- NAVBAR -->
+
+<div class="navbar">
+
+<div class="logo">
+NYOBA MUSIC 🎧
+</div>
+
+<div class="search-box">
+
+<input
+type="text"
+id="searchInput"
+placeholder="Cari lagu favorit..."
+>
+
+<button onclick="searchSong()">
+Cari
+</button>
+
+</div>
+
+</div>
+
+<!-- CONTENT -->
+
+<div class="content">
+
+<!-- SONG LIST -->
+
+<div class="song-list" id="songList">
+
+<div class="song-card">
+
+<div class="song-title">
+Cari lagu dulu 🎵
+</div>
+
+<div class="song-artist">
+Cyber Music Player
+</div>
+
+</div>
+
+</div>
+
+<!-- PLAYER -->
+
+<div class="player-area">
+
+<div class="album-wrapper">
+
+<div class="album" id="album">
+
+<img
+id="albumImage"
+src="https://i.imgur.com/8Km9tLL.jpg"
+>
+
+</div>
+
+</div>
+
+<div class="now-playing">
+
+<h2 id="musicTitle">
+Belum ada lagu
+</h2>
+
+<p id="musicArtist">
+-
+</p>
+
+</div>
+
+<audio
+id="audioPlayer"
+controls>
+</audio>
+
+<div class="lyrics" id="lyrics">
+Lirik lagu akan muncul di sini...
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+const player =
+document.getElementById("audioPlayer")
+
+const album =
+document.getElementById("album")
+
+player.addEventListener("play",()=>{
+
+album.classList.add("playing")
+
+})
+
+player.addEventListener("pause",()=>{
+
+album.classList.remove("playing")
+
+})
+
+async function searchSong(){
+
+const query =
+document.getElementById("searchInput").value
+
+const songList =
+document.getElementById("songList")
+
+songList.innerHTML =
+"Loading..."
+
+try{
+
+const response =
+await fetch(
+`https://deezerdevs-deezer.p.rapidapi.com/search?q=${query}`,
+{
+method:"GET",
+
+headers:{
+"X-RapidAPI-Key":"ca7d4e8a92msh06e8fefc17789abp13b3e7jsn07c0274ee226",
+
+"X-RapidAPI-Host":
+"deezerdevs-deezer.p.rapidapi.com"
+}
+
+}
+)
+
+const data =
+await response.json()
+
+songList.innerHTML = ""
+
+for(let song of data.data){
+
+const card =
+document.createElement("div")
+
+card.className =
+"song-card"
+
+card.innerHTML = `
+
+<div class="song-title">
+${song.title}
+</div>
+
+<div class="song-artist">
+${song.artist.name}
+</div>
+
+`
+
+card.onclick = ()=>{
+
+playSong(song)
+
+}
+
+songList.appendChild(card)
+
+}
+
+}catch(error){
+
+songList.innerHTML =
+"Error ambil lagu"
+
+console.log(error)
+
+}
+
+}
+
+async function playSong(song){
+
+document.getElementById("musicTitle")
+.innerText = song.title
+
+document.getElementById("musicArtist")
+.innerText = song.artist.name
+
+document.getElementById("albumImage")
+.src = song.album.cover_big
+
+player.src = song.preview
+
+player.play()
+
+/* LYRICS */
+
+try{
+
+const lyricsResponse =
+await fetch(
+`https://api.lyrics.ovh/v1/${song.artist.name}/${song.title}`
+)
+
+const lyricsData =
+await lyricsResponse.json()
+
+if(lyricsData.lyrics){
+
+document.getElementById("lyrics")
+.innerText = lyricsData.lyrics
+
+}else{
+
+document.getElementById("lyrics")
+.innerText =
+"Lirik tidak ditemukan"
+
+}
+
+}catch(error){
+
+console.log(error)
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
